@@ -13,9 +13,8 @@ body {
     padding: 10px 20px;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: bold;
+.menu-item logo {
+    background-image: url('img/logo.png');
 }
 
 .contact {
