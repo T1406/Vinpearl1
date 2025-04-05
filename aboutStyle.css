@@ -13,8 +13,9 @@ body {
     padding: 10px 20px;
 }
 
-.menu-item logo {
-    background-image: url('img/logo.png');
+.logo {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .contact {
@@ -28,12 +29,24 @@ body {
 
 .menu-bar {
     display: flex;
-    /* Sử dụng flexbox để phân bố đều các mục menu */
-    justify-content: space-around;
-    /* Chia đều không gian giữa các mục */
+    align-items: center;
+    justify-content: space-between;
     background-color: white;
-    padding: 10px 0;
-    /* Padding trên và dưới */
+    /* Màu nền menu */
+    padding: 10px;
+}
+
+/* Logo */
+.menu-item.logo {
+    flex: 1;
+    /* Căn chỉnh logo về phía bên trái hoặc tùy ý */
+}
+
+.menu-item.logo .logo-img {
+    height: 50px;
+    /* Đặt chiều cao của logo */
+    width: auto;
+    object-fit: contain;
 }
 
 .menu-item {
