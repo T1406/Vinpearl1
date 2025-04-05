@@ -38,6 +38,8 @@ body {
 }
 
 .menu-item {
+    border: 2px solid #ccc;
+    /* Viền mặc định là trong suốt */
     display: flex;
     /* Đảm bảo icon và chữ nằm dọc */
     flex-direction: column;
@@ -66,6 +68,13 @@ body {
 .menu-item {
     color: black;
     /* Màu mặc định cho chữ và icon */
+}
+
+.menu-item.active {
+    background-color: #9C582B;
+    /* Màu đậm hơn khi chọn */
+    border-color: #6A3E2E;
+    /* Màu viền khi chọn */
 }
 
 .menu-item:hover {
@@ -497,43 +506,64 @@ button.btn-price {
     background-color: #771717;
 }
 
+/* Explore Carousel Layout */
 .container-exp {
+    background-color: rgb(173, 240, 240);
     display: flex;
-    padding: 20px;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 40px;
 }
 
-/* Danh mục (Phần bên trái) */
 #categoryMenu {
-    width: 20%;
     padding: 10px;
-    background-color: #f4f4f4;
-    height: 100vh;
-    /* Chiều cao toàn màn hình */
+    overflow-y: auto;
+    display: flex;
+    height: 60vh;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Phân bố đều các mục dọc theo chiều cao */
 }
 
 .category-list {
-    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    /* Cho phép category list mở rộng chiếm chiều cao còn lại */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Các mục cách đều nhau trong danh sách */
+    /* Phân bố đều các mục dọc theo chiều cao */
+    list-style: none;
     padding: 0;
 }
 
 .category-item {
+    background-color: orange;
     padding: 10px;
+    color: black;
+    font-weight: bold;
     cursor: pointer;
-    background-color: #fff;
     margin: 5px 0;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .category-item:hover {
-    background-color: #ddd;
+    background-color: #fb861f;
+    /* Màu cam nâu đậm hơn khi hover */
 }
 
-/* Phần carousel (Phần bên phải) */
+.category-item.active {
+    background-color: #9C582B;
+    /* Màu nâu đậm khi mục danh mục được chọn */
+}
+
 #carouselContainer {
-    width: 80%;
     overflow: hidden;
     position: relative;
+    padding-left: 20px;
 }
 
 .carousel-e {
@@ -555,10 +585,5 @@ button.btn-price {
     width: 100%;
     height: auto;
     object-fit: cover;
-}
-
-/* Scrollbar custom (nếu cần) */
-::-webkit-scrollbar {
-    display: none;
-    /* Ẩn scrollbar mặc định */
+    margin-bottom: 10px;
 }
