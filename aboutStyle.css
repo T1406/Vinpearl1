@@ -1,0 +1,564 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.contact {
+    font-size: 14px;
+}
+
+.search-lang {
+    display: flex;
+    align-items: center;
+}
+
+.menu-bar {
+    display: flex;
+    /* Sử dụng flexbox để phân bố đều các mục menu */
+    justify-content: space-around;
+    /* Chia đều không gian giữa các mục */
+    background-color: white;
+    padding: 10px 0;
+    /* Padding trên và dưới */
+}
+
+.menu-item {
+    display: flex;
+    /* Đảm bảo icon và chữ nằm dọc */
+    flex-direction: column;
+    /* Đặt icon ở trên chữ */
+    align-items: center;
+    /* Căn giữa các phần tử */
+    text-align: center;
+    /* Căn giữa chữ */
+    padding: 5px 10px;
+    /* Padding cho mỗi mục */
+    flex-grow: 1;
+    /* Các mục menu chiếm đều không gian */
+    cursor: pointer;
+    /* Thêm hiệu ứng khi di chuột qua */
+    color: white;
+    /* Màu chữ mặc định */
+}
+
+.menu-item .glyphicon {
+    font-size: 24px;
+    /* Kích thước icon */
+    margin-bottom: 5px;
+    /* Khoảng cách giữa icon và chữ */
+}
+
+.menu-item {
+    color: black;
+    /* Màu mặc định cho chữ và icon */
+}
+
+.menu-item:hover {
+    background-color: #555;
+    /* Màu nền khi di chuột qua */
+    color: red;
+    /* Màu chữ khi di chuột qua */
+}
+
+/* Đảm bảo mỗi mục menu có chiều rộng đồng đều */
+.menu-item.home,
+.menu-item.about,
+.menu-item.price,
+.menu-item.booking,
+.menu-item.explore,
+.menu-item.news,
+.menu-item.guide,
+.menu-item.destination,
+.menu-item.contact {
+    text-align: center;
+}
+
+.menu-item.contact,
+.menu-item.home {
+    color: red;
+}
+
+.menu-item.price {
+    color: rgb(138, 60, 72);
+}
+
+.menu-item.home .glyphicon {
+    color: red;
+}
+
+.menu-item.explore {
+    color: #ff5733;
+}
+
+.menu-item.news {
+    color: green;
+}
+
+.menu-item.booking {
+    color: rgb(143, 7, 143);
+}
+
+.menu-item.guide {
+    color: blueviolet;
+}
+
+.menu-item.destination {
+    color: rgb(0, 98, 255);
+}
+
+.menu-item img {
+    margin-right: 8px;
+}
+
+.menu-item.about {
+    color: rgb(190, 32, 127);
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 60px - 50px);
+    overflow: auto;
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.carousel img.active {
+    opacity: 1;
+}
+
+.carousel-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    display: block;
+}
+
+.carousel-content .btn {
+    background-color: #ff5733;
+    /* Màu cam đỏ đậm cho nền */
+    border: 5px solid #ff9900;
+    /* Viền nhỏ màu cam */
+    padding: 15px 30px;
+    text-decoration: none;
+    color: white;
+    /* Chữ màu trắng */
+    font-size: 45px;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* Chữ đậm */
+    border-radius: 50px;
+    /* Bo tròn góc */
+    display: inline-block;
+    transition: background-color 0.3s, border-color 0.3s;
+    /* Thêm hiệu ứng chuyển màu nền và viền khi hover */
+    margin-top: 20px;
+}
+
+.carousel-content .btn:hover {
+    background-color: #ff9900;
+    /* Màu nền cam khi hover */
+    border-color: #e68a00;
+    /* Viền đổi thành màu cam đậm khi hover */
+}
+
+.carousel-content .btn:active {
+    background-color: #e68a00;
+    /* Màu nền cam đậm khi nhấn */
+    border-color: #ff5733;
+    /* Viền trở thành màu cam đỏ khi nhấn */
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 1;
+    border-radius: 12px;
+}
+
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Đảm bảo container có đúng chiều rộng và chia 7-3 */
+.container {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.col-7 {
+    width: 80%;
+    padding-right: 20px;
+    background-image: url('img/price.png');
+    background-size: cover;
+    /* Đảm bảo ảnh nền bao phủ toàn bộ phần */
+    background-position: center;
+    /* Căn chỉnh ảnh nền ở giữa */
+    background-repeat: no-repeat;
+    /* Không lặp lại ảnh nền */
+    height: 617px;
+    /* Chiều cao của phần ảnh nền chiếm toàn bộ viewport */
+}
+
+.col-3 {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-image: url('img/price2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 617px;
+}
+
+/* Phần section để quản lý từng phần riêng biệt */
+.section {
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    align-items: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 45px;
+    font-family: 'Lobster', sans-serif;
+    color: rgb(33, 52, 161);
+}
+
+/* Style cho form */
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.form-row {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#totalAmount {
+    color: red;
+}
+
+/* Style cho phần nhập liệu */
+form label {
+    margin-top: 10px;
+}
+
+form input,
+form select {
+    padding: 5px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+/* Nút mua vé */
+button.btn-price {
+    position: static;
+    /* Hủy bỏ ảnh hưởng của position absolute */
+    top: auto;
+    transform: none;
+    /* Loại bỏ biến đổi translate */
+    background-color: #ff9900;
+    /* Màu cam đỏ đậm cho nền */
+    border: 5px solid #ff9900;
+    /* Viền nhỏ màu cam */
+    padding: 15px 30px;
+    text-decoration: none;
+    color: black;
+    /* Chữ màu trắng */
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* Chữ đậm */
+    border-radius: 50px;
+    /* Bo tròn góc */
+    transition: background-color 0.3s, border-color 0.3s;
+    /* Thêm hiệu ứng chuyển màu nền và viền khi hover */
+    margin-top: 20px;
+}
+
+/* CSS cho thông tin khách hàng (col-6) */
+.customer-info .form-row {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.customer-info .form-item {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.customer-info .form-item label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.customer-info .form-item input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.customer-info .form-item:last-child {
+    margin-right: 0;
+}
+
+/* Hình thức thanh toán */
+.customer-info .payment-methods {
+    margin-top: 20px;
+}
+
+.customer-info .payment-item {
+    margin-bottom: 10px;
+}
+
+.customer-info .payment-item input {
+    margin-right: 5px;
+}
+
+/* CSS cho layout col-6 và col-4 */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-6 {
+    flex: 0 0 60%;
+    /* 50% width for col-6 */
+    padding: 20px;
+}
+
+.col-4 {
+    flex: 0 0 33.33%;
+    /* 33.33% width for col-4 */
+    padding: 20px;
+}
+
+.promo-code-container {
+    display: flex;
+    /* Đặt các phần tử con theo hàng ngang */
+    align-items: center;
+    /* Canh giữa dọc */
+    gap: 10px;
+    /* Khoảng cách giữa input và button */
+}
+
+.promo-code-container input {
+    width: 70%;
+    /* Chiều rộng của input */
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.promo-code-container button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.promo-code-container button:hover {
+    background-color: #45a049;
+}
+
+.promo-code button {
+    position: static;
+    /* Hủy bỏ ảnh hưởng của position absolute */
+    top: auto;
+    transform: none;
+}
+
+.payment-btn button {
+    position: static;
+    /* Hủy bỏ ảnh hưởng của position absolute */
+    top: auto;
+    transform: none;
+}
+
+/* Bạn có thể thêm phần layout cho col-4 sau khi có nội dung */
+/* Phân biệt phần ticket-info chỉ áp dụng trong booking-page */
+.booking-page .ticket-info {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.red-text {
+    color: red;
+}
+
+.booking-page .info-row {
+    margin-bottom: 15px;
+}
+
+.booking-page .info-item {
+    margin: 5px 0;
+}
+
+.booking-page .info-item label {
+    font-weight: bold;
+}
+
+.booking-page hr {
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+.booking-page .promo-code {
+    margin-top: 20px;
+}
+
+.booking-page .promo-code input {
+    width: 70%;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.booking-page .payment-btn button {
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.booking-page .payment-btn button:hover {
+    background-color: #771717;
+}
+
+.container-exp {
+    display: flex;
+    padding: 20px;
+}
+
+/* Danh mục (Phần bên trái) */
+#categoryMenu {
+    width: 20%;
+    padding: 10px;
+    background-color: #f4f4f4;
+    height: 100vh;
+    /* Chiều cao toàn màn hình */
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.category-item:hover {
+    background-color: #ddd;
+}
+
+/* Phần carousel (Phần bên phải) */
+#carouselContainer {
+    width: 80%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-e {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-e-item {
+    display: none;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.carousel-e-item.active {
+    display: block;
+}
+
+.carousel-e-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Scrollbar custom (nếu cần) */
+::-webkit-scrollbar {
+    display: none;
+    /* Ẩn scrollbar mặc định */
+}

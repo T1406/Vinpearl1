@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinpearl</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="aboutStyle.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="contact"><span class="glyphicon glyphicon-earphone"></span> Hotline: 0123 456 789</div>
+        <div class="search-lang">
+            <input type="text" placeholder="Tìm kiếm...">
+            <select>
+                <option>Tiếng Việt</option>
+                <option>English</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="menu-bar">
+        <div class="menu-item home" onclick="loadPage('home')"><span class="glyphicon glyphicon-home"></span> Trang chủ
+        </div>
+        <div class="menu-item about" onclick="loadPage('about')"><span class="glyphicon glyphicon-info-sign"></span>
+            Giới thiệu</div>
+        <div class="menu-item price" onclick="loadPage('prices')"><span class="glyphicon glyphicon-tags"></span> Bảng
+            giá</div>
+        <div class="menu-item booking" onclick="loadPage('booking')"><span class="glyphicon glyphicon-calendar"></span>
+            Đặt vé</div>
+        <div class="menu-item explore" onclick="loadPage('explore')"><span class="glyphicon glyphicon-globe"></span>
+            Khám phá</div>
+        <div class="menu-item news" onclick="loadPage('news')"><span class="glyphicon glyphicon-bullhorn"></span> Tin
+            tức - Sự kiện</div>
+        <div class="menu-item guide" onclick="loadPage('guide')"><span class="glyphicon glyphicon-book"></span> Hướng
+            dẫn </div>
+        <div class="menu-item destination" onclick="loadPage('destination')"><span
+                class="glyphicon glyphicon-map-marker"></span> Điểm đến</div>
+        <div class="menu-item contact" onclick="loadPage('contact')"><span class="glyphicon glyphicon-envelope"></span>
+            Liên hệ </div>
+    </div>
+
+    <div id="content"></div> <!-- Phần này để hiển thị nội dung được thay đổi -->
+
+    <script>
+        function loadPage(page) {
+            const content = document.getElementById("content");
+
+            switch (page) {
+                case "home":
+                    content.innerHTML = `
+                    <div class='carousel'>
+                        <button class="prev-btn">&#10094;</button>
+                        <img src='img/img.png' class='active' alt='Hình ảnh 1'>
+                        <img src='img/img2.png' alt='Hình ảnh 2'>
+                        <img src='img/img3.png' alt='Hình ảnh 3'>
+                        <img src='img/img4.png' alt='Hình ảnh 4'>
+                        <img src='img/img5.png' alt='Hình ảnh 5'>
+                        <button class="next-btn">&#10095;</button>
+                    </div>
+                    <div class="carousel-content">
+                        <a onclick="loadPage('booking')" class="btn">Mua vé ngay!</a>
+                    </div>
+                `;
+                    setupCarousel();
+                    break;
+
+                case "about":
+                    content.innerHTML = `
+                    <div class='carousel'>
+                        <button class="prev-btn">&#10094;</button>
+                        <img src='img/about1.png' class='active' alt='Hình ảnh 1'>
+                        <img src='img/about2.png' alt='Hình ảnh 2'>
+                        <button class="next-btn">&#10095;</button>
+                    </div>
+                `;
+                    setupCarousel();
+                    break;
+
+                case "prices":
+                    content.innerHTML = `
+                <div class="container">
+    <div class="row">
+        <!-- Phần 7 - 70% chiều rộng với ảnh nền -->
+        <div class="col-7">
+            <!-- Phần 7 có ảnh nền -->
+        </div>
+
+        <!-- Phần 3 - 30% chiều rộng chia thành 3 phần theo chiều dọc -->
+        <div class="col-3">
+            <div class="section">
+                <!-- Phần Đặt vé -->
+                <h3>Đặt vé</h3>
+            </div>
+
+            <!-- Phần giữa chia làm 4 hàng -->
+            <form id="bookingForm">
+    <div class="form-row">
+        <!-- Hàng 1: Chọn ngày -->
+        <div class="form-item">
+            <label for="pickDate">Chọn ngày:</label> 
+            <input type="date" id="pickDate" name="pickDate">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <!-- Hàng 2: Loại khách -->
+        <div class="form-item">
+            <label for="customerType">Loại khách:</label>
+            <select id="customerType" name="customerType" onchange="updateTotalAmount()">
+                <option value="Adult">Người lớn</option>
+                <option value="Child">Trẻ em</option>
+                <option value="Free">Trẻ dưới 80cm</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <!-- Hàng 3: Số lượng -->
+        <div class="form-item">
+            <label for="quantity">Số lượng:</label>
+            <input style="width:245px; height:30px ;" type="number" id="quantity" name="quantity" min="1" value="1" onchange="updateTotalAmount()">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <!-- Hàng 4: Thành tiền -->
+        <div class="form-item">
+            <label for="totalAmount">Thành tiền:</label>
+            <span id="totalAmount"></span>
+        </div>
+    </div>
+
+    <!-- Phần cuối: Button mua vé -->
+    <div class="form-item">
+            <button class="btn-price" type="button" onclick="submitBooking()">Mua vé ngay</button>
+        </div>
+</form>
+        </div>
+    </div>
+</div>
+            `;
+                    break;
+
+                case "booking":
+                    content.innerHTML = `
+                <div class="container">
+    <div class="row">
+        <!-- Phần col-6: Thông tin khách hàng -->
+        <div class="col-6">
+            <div class="customer-info">
+                <h3>Thông tin khách hàng</h3>
+                <!-- Thông tin khách hàng -->
+                <div class="form-row">
+                    <div class="form-item">
+                        <label for="fullName">Họ tên*</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="phone">Số điện thoại*</label>
+                        <input type="text" id="phone" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-item">
+                        <label for="email">Email*</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="country">Quốc gia*</label>
+                        <input type="text" id="country" name="country" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-item">
+                        <label for="address">Địa chỉ*</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="idNumber">Số CCCD*</label>
+                        <input type="text" id="idNumber" name="idNumber" required>
+                    </div>
+                </div>
+
+                <h3>Hình thức thanh toán</h3>
+                <div class="payment-methods">
+                    <div class="payment-item">
+                        <input type="checkbox" id="internationalCard" name="paymentMethod" value="internationalCard">
+                        <label for="internationalCard">Thẻ quốc tế</label>
+                    </div>
+                    <div class="payment-item">
+                        <input type="checkbox" id="localBankCard" name="paymentMethod" value="localBankCard">
+                        <label for="localBankCard">Thẻ/Tài khoản ngân hàng nội địa</label>
+                    </div>
+                    <div class="payment-item">
+                        <input type="checkbox" id="vnpay" name="paymentMethod" value="vnpay">
+                        <label for="vnpay">Vnpay</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phần col-4: Placeholder for next content -->
+        <div class="col-4 booking-page">
+    <div class="ticket-info">
+        <h3>Thông tin vé</h3>
+        <div class="info-row">
+            <div class="info-item">
+                <label for="ticketDate">Ngày sử dụng:</label>
+                <span id="ticketDate">--</span> <!-- Lấy ngày từ bookingForm -->
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-item">
+                <label for="ticketType">Vé tham quan:</label>
+                <span id="ticketType">--</span> <!-- Lấy dữ liệu từ bookingForm (Người lớn, Trẻ em, Trẻ dưới 80cm) -->
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-item">
+                <label for="ticketQuantity">Số lượng:</label>
+                <span id="ticketQuantity">--</span> <!-- Lấy dữ liệu số lượng từ bookingForm -->
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-item">
+                <label for="ticketPrice">Giá vé:</label>
+                <span id="ticketPrice">--</span> <!-- Giá tính theo bảng thông tin vé -->
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="info-row">
+            <div class="info-item">
+                <label for="totalAmount">Thành tiền:</label>
+                <span id="totalAmount" class="red-text">-- VND</span> <!-- Thành tiền sẽ tính ở phần trước -->
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-item">
+                <label for="discount">Giảm giá:</label>
+                <span id="discount" class="red-text">0 VND</span> <!-- Giảm giá sẽ được tính sau -->
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-item">
+                <label for="finalAmount">Tổng tiền:</label>
+                <span id="finalAmount" class="red-text">-- VND</span> <!-- Tổng tiền bao gồm VAT -->
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Mã khuyến mãi -->
+        <div class="promo-code">
+            <div class="promo-code-container">
+        <input type="text" id="promoCode" name="promoCode" placeholder="Nhập mã khuyến mãi">
+        <button type="button" onclick="applyPromoCode()">Áp dụng</button>
+    </div>
+        </div>
+
+        <!-- Nút thanh toán -->
+        <div class="payment-btn">
+            <button type="button" onclick="submitPayment()">Thanh toán</button>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+            `;
+                    loadBookingPage();
+                    break;
+
+                case "explore":
+                    content.innerHTML = `
+                <div class="container-exp">
+    <div class="row-e">
+        <!-- Phần danh mục - 2 phần (col-2) -->
+        <div class="col-2" id="categoryMenu">
+            <ul class="category-list">
+                <li data-target="freshwater" class="category-item">Khu vực cá nước ngọt</li>
+                <li data-target="saltwater" class="category-item">Khu vực cá nước mặn</li>
+                <li data-target="reptiles" class="category-item">Khu vực bò sát</li>
+                <li data-target="specimens" class="category-item">Khu vực trưng bày mẫu vật</li>
+                <li data-target="activities" class="category-item">Tour, shows, hoạt động kết nối</li>
+            </ul>
+        </div>
+
+        <!-- Phần carousel ảnh - 8 phần (col-8) -->
+        <div class="col-8" id="carouselContainer">
+            <div class="carousel-e">
+                <div id="freshwater" class="carousel-e-item">
+                    <!-- Ảnh cho Khu vực cá nước ngọt -->
+                    <img src="img/e1.png" alt="Khu vực cá nước ngọt" class="carousel-e-image">
+                </div>
+                <div id="saltwater" class="carousel-e-item">
+                    <!-- Ảnh cho Khu vực cá nước mặn -->
+                    <img src="img/e2.png" alt="Khu vực cá nước mặn" class="carousel-e-image">
+                    <img src="saltwater-image2.jpg" alt="Khu vực cá nước mặn" class="carousel-e-image">
+                </div>
+                <div id="reptiles" class="carousel-e-item">
+                    <!-- Ảnh cho Khu vực bò sát -->
+                    <img src="reptiles-image1.jpg" alt="Khu vực bò sát" class="carousel-e-image">
+                    <img src="reptiles-image2.jpg" alt="Khu vực bò sát" class="carousel-e-image">
+                </div>
+                <div id="specimens" class="carousel-e-item">
+                    <!-- Ảnh cho Khu vực trưng bày mẫu vật -->
+                    <img src="specimens-image1.jpg" alt="Khu vực trưng bày mẫu vật" class="carousel-e-image">
+                </div>
+                <div id="activities" class="carousel-e-item">
+                    <!-- Ảnh cho Tour, shows, hoạt động kết nối -->
+                    <img src="activities-image1.jpg" alt="Tour, shows, hoạt động kết nối" class="carousel-e-image">
+                    <img src="activities-image2.jpg" alt="Tour, shows, hoạt động kết nối" class="carousel-e-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            `;
+                    break;
+
+                case "news":
+                    content.innerHTML = `
+                <div class='carousel'>
+                        <button class="prev-btn">&#10094;</button>
+                        <img src='img/new.png' class='active' alt='Hình ảnh 1'>
+                        <img src='img/new2.png' alt='Hình ảnh 2'>
+                        <img src='img/new3.png' alt='Hình ảnh 3'>
+                        <button class="next-btn">&#10095;</button>
+                    </div>
+            `;
+                    setupCarousel();
+                    break;
+                case "guide":
+                    content.innerHTML = `
+                <div class='carousel'>
+                        <img src='img/guide.png' class='active' alt='Hình ảnh 1'>
+                    </div>
+            `;
+                    setupCarousel();
+                    break;
+                case "destination":
+                    content.innerHTML = `
+                <div class='carousel'>
+                        <img src='img/destination.png' class='active' alt='Hình ảnh 1'>
+                    </div>
+            `;
+                    setupCarousel();
+                    break;
+                case "contact":
+                    content.innerHTML = `
+                <div class='carousel'>
+                        <img src='img/contact.png' class='active' alt='Hình ảnh 1'>
+                    </div>
+            `;
+                    setupCarousel();
+                    break;
+                default:
+                    content.innerHTML = `< h1 > ${page} đang được cập nhật...</ >`;
+                    break;
+            }
+        }
+        function loadBookingPage() {
+            var customerType = localStorage.getItem('customerType');
+            var quantity = localStorage.getItem('quantity');
+            var totalAmount = localStorage.getItem('totalAmount');
+            var pickDate = localStorage.getItem('pickDate'); // Lấy ngày từ localStorage
+
+            // Hiển thị thông tin lên giao diện trang booking
+            document.getElementById('ticketType').textContent = customerType;
+            document.getElementById('ticketQuantity').textContent = quantity;
+            document.getElementById('ticketPrice').textContent = totalAmount;
+            document.getElementById('totalAmount').textContent = totalAmount;
+            document.getElementById('finalAmount').textContent = totalAmount;
+            document.getElementById('ticketDate').textContent = pickDate; // Hiển thị ngày
+
+            // Cập nhật các trường hợp cần thiết trong form hoặc giao diện
+        }
+        function setupCarousel() {
+            let currentIndex = 0;
+            const images = document.querySelectorAll(".carousel img");
+            const button = document.querySelector(".carousel-content .btn");
+            const prevBtn = document.querySelector(".prev-btn");
+            const nextBtn = document.querySelector(".next-btn");
+
+            // Hàm chuyển đến ảnh tiếp theo
+            function goToImage(index) {
+                images[currentIndex].classList.remove("active");
+                currentIndex = index;
+                images[currentIndex].classList.add("active");
+
+                // Hiển thị nút "Mua vé ngay" chỉ khi ảnh đầu tiên được chọn
+                if (currentIndex === 0) {
+                    button.style.display = "block";
+                } else {
+                    button.style.display = "none";
+                } .0
+            }
+
+            // Xử lý khi nhấn nút trước
+            prevBtn.addEventListener("click", function () {
+                const newIndex = (currentIndex - 1 + images.length) % images.length;
+                goToImage(newIndex);
+            });
+
+            // Xử lý khi nhấn nút sau
+            nextBtn.addEventListener("click", function () {
+                const newIndex = (currentIndex + 1) % images.length;
+                goToImage(newIndex);
+            });
+
+            // Khởi tạo khi load trang
+            goToImage(currentIndex);
+        }
+        // Mảng giá vé
+        const ticketPrices = {
+            Adult: { weekday: 190000, weekend: 250000 }, // Người lớn
+            Child: { weekday: 140000, weekend: 190000 }, // Trẻ em
+            Free: { weekday: 0, weekend: 0 } // Trẻ dưới 80cm (miễn phí)
+        };
+
+        // Hàm để cập nhật "Thành tiền"
+        function updateTotalAmount() {
+            const customerType = document.getElementById("customerType").value; // Loại khách (người lớn, trẻ em, miễn phí)
+            const quantity = parseInt(document.getElementById("quantity").value); // Số lượng
+
+            // Lấy giá trị ngày (có thể tính thêm các điều kiện ngày trong tuần hoặc cuối tuần nếu cần)
+            const isWeekend = isWeekendDate(document.getElementById("pickDate").value); // Hàm kiểm tra ngày cuối tuần
+
+            // Lấy giá vé dựa trên loại khách và ngày
+            const ticketPrice = customerType === 'free' ? ticketPrices.free : (isWeekend ? ticketPrices[customerType].weekend : ticketPrices[customerType].weekday);
+
+            // Tính thành tiền
+            const totalAmount = ticketPrice * quantity;
+
+            // Cập nhật thành tiền trên giao diện
+            document.getElementById("totalAmount").textContent = formatCurrency(totalAmount);
+        }
+
+        // Hàm kiểm tra xem ngày có phải cuối tuần không
+        function isWeekendDate(date) {
+            const selectedDate = new Date(date);
+            const dayOfWeek = selectedDate.getDay(); // 0 là Chủ nhật, 6 là Thứ bảy
+            return (dayOfWeek === 0 || dayOfWeek === 6); // Kiểm tra nếu là Chủ nhật hoặc Thứ bảy
+        }
+
+        // Hàm định dạng tiền tệ
+        function formatCurrency(amount) {
+            return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+
+        // Hàm khi người dùng nhấn "Mua vé ngay"
+        function submitBooking() {
+            // Lấy các thông tin từ giao diện prices
+            var customerType = document.getElementById('customerType').value;
+            var quantity = document.getElementById('quantity').value;
+            var totalAmount = document.getElementById('totalAmount').textContent;
+            var pickDate = document.getElementById('pickDate').value; // Lấy giá trị của ngày chọn
+
+            // Lưu thông tin vào localStorage
+            localStorage.setItem('customerType', customerType);
+            localStorage.setItem('quantity', quantity);
+            localStorage.setItem('totalAmount', totalAmount);
+            localStorage.setItem('pickDate', pickDate); // Lưu ngày
+            alert("Bạn đã đặt vé thành công!");
+            loadPage('booking'); // Điều hướng đến phần đặt vé
+        }
+        function applyPromoCode() {
+            const promoCode = document.getElementById("promoCode").value;
+            // Kiểm tra mã khuyến mãi và tính toán giảm giá
+            if (promoCode === "SUMMER20") {
+                // Giảm giá 20% ví dụ
+                const discount = 0.2 * parseFloat(document.getElementById("totalAmount").innerText.replace(" VND", ""));
+                const finalAmount = parseFloat(document.getElementById("totalAmount").innerText.replace(" VND", "")) - discount;
+                document.getElementById("discount").innerText = discount + " VND";
+                document.getElementById("finalAmount").innerText = finalAmount + " VND";
+            }
+        }
+        function submitPayment() {
+            alert("Thanh toán thành công! Cảm ơn bạn đã mua vé.");
+            loadPage('home'); // Điều hướng đến phần đặt vé
+            localStorage.removeItem('pickDate');
+            localStorage.removeItem('customerType');
+            localStorage.removeItem('quantity');
+            localStorage.removeItem('totalAmount');
+            localStorage.removeItem('ticketDate');
+            localStorage.removeItem('ticketType');
+            localStorage.removeItem('ticketQuantity');
+            localStorage.removeItem('ticketPrice');
+            localStorage.removeItem('finalAmount');
+
+            document.getElementById('bookingForm').reset();
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const categories = document.querySelectorAll(".category-e-item");
+            const carouselItems = document.querySelectorAll(".carousel-e-item");
+            const categoryMenu = document.getElementById("categoryMenu");
+            const carouselContainer = document.getElementById("carouselContainer");
+
+            // Hàm để chuyển carousel theo danh mục
+            function changeCarousel(category) {
+                // Ẩn tất cả các item carousel
+                carouselItems.forEach(item => item.classList.remove("active"));
+
+                // Hiển thị item tương ứng với category
+                const targetItem = document.getElementById(category);
+                if (targetItem) {
+                    targetItem.classList.add("active");
+                }
+            }
+
+            // Lắng nghe sự kiện click vào danh mục
+            categories.forEach(category => {
+                category.addEventListener("click", function () {
+                    const target = this.getAttribute("data-target");
+                    changeCarousel(target);
+                });
+            });
+
+            // Hàm cuộn carousel
+            let scrollTimeout;
+            carouselContainer.addEventListener('wheel', (event) => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    if (event.deltaY > 0) {
+                        nextCarousel();
+                    } else {
+                        prevCarousel();
+                    }
+                }, 150);
+            });
+
+            // Chuyển sang ảnh tiếp theo
+            function nextCarousel() {
+                let currentActive = document.querySelector(".carousel-e-item.active");
+                let next = currentActive.nextElementSibling;
+
+                if (!next) {
+                    next = carouselItems[0];
+                }
+
+                changeCarousel(next.id);
+            }
+
+            // Quay lại ảnh trước
+            function prevCarousel() {
+                let currentActive = document.querySelector(".carousel-e-item.active");
+                let prev = currentActive.previousElementSibling;
+
+                if (!prev) {
+                    prev = carouselItems[carouselItems.length - 1];
+                }
+
+                changeCarousel(prev.id);
+            }
+
+            // Mặc định hiển thị "Khu vực cá nước ngọt"
+            changeCarousel("freshwater");
+        });
+    </script>
+</body>
+
+</html>
