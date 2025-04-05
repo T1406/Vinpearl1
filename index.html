@@ -285,18 +285,19 @@
                 case "explore":
                     content.innerHTML = `
                 <div class="container-exp">
-    <div class="row-e">
+    <div class="col-2" style="width:20%;">
         <!-- Phần danh mục - 2 phần (col-2) -->
-        <div class="col-2" id="categoryMenu">
-            <ul class="category-list">
-                <li data-target="freshwater" class="category-item">Khu vực cá nước ngọt</li>
-                <li data-target="saltwater" class="category-item">Khu vực cá nước mặn</li>
-                <li data-target="reptiles" class="category-item">Khu vực bò sát</li>
-                <li data-target="specimens" class="category-item">Khu vực trưng bày mẫu vật</li>
-                <li data-target="activities" class="category-item">Tour, shows, hoạt động kết nối</li>
-            </ul>
-        </div>
+<div id="categoryMenu">
+    <ul class="category-list">
+        <li class="category-item" data-target="freshwater">Khu vực cá nước ngọt</li>
+        <li class="category-item" data-target="saltwater">Khu vực cá nước mặn</li>
+        <li class="category-item" data-target="reptiles">Khu vực bò sát</li>
+        <li class="category-item" data-target="specimens">Khu vực trưng bày mẫu vật</li>
+        <li class="category-item" data-target="activities">Tour, shows, hoạt động kết nối</li>
+    </ul>
+</div>
 
+</div>
         <!-- Phần carousel ảnh - 8 phần (col-8) -->
         <div class="col-8" id="carouselContainer">
             <div class="carousel-e">
@@ -307,27 +308,129 @@
                 <div id="saltwater" class="carousel-e-item">
                     <!-- Ảnh cho Khu vực cá nước mặn -->
                     <img src="img/e2.png" alt="Khu vực cá nước mặn" class="carousel-e-image">
-                    <img src="saltwater-image2.jpg" alt="Khu vực cá nước mặn" class="carousel-e-image">
+                    <img src="img/e3.png" alt="Khu vực cá nước mặn" class="carousel-e-image">
                 </div>
                 <div id="reptiles" class="carousel-e-item">
                     <!-- Ảnh cho Khu vực bò sát -->
-                    <img src="reptiles-image1.jpg" alt="Khu vực bò sát" class="carousel-e-image">
-                    <img src="reptiles-image2.jpg" alt="Khu vực bò sát" class="carousel-e-image">
+                    <img src="img/e4.png" alt="Khu vực bò sát" class="carousel-e-image">
                 </div>
                 <div id="specimens" class="carousel-e-item">
                     <!-- Ảnh cho Khu vực trưng bày mẫu vật -->
-                    <img src="specimens-image1.jpg" alt="Khu vực trưng bày mẫu vật" class="carousel-e-image">
+                    <img src="img/e5.png" alt="Khu vực trưng bày mẫu vật" class="carousel-e-image">
                 </div>
                 <div id="activities" class="carousel-e-item">
                     <!-- Ảnh cho Tour, shows, hoạt động kết nối -->
-                    <img src="activities-image1.jpg" alt="Tour, shows, hoạt động kết nối" class="carousel-e-image">
-                    <img src="activities-image2.jpg" alt="Tour, shows, hoạt động kết nối" class="carousel-e-image">
+                    <img src="img/e6.png" alt="Tour, shows, hoạt động kết nối" class="carousel-e-image">
+                    <img src="img/e7.png" alt="Tour, shows, hoạt động kết nối" class="carousel-e-image">
                 </div>
             </div>
         </div>
     </div>
-</div>
             `;
+                    initExploreCarousel();
+                    // Chạy đoạn script để gán sự kiện và xử lý carousel
+                    function initExploreCarousel() {
+                        const categories = document.querySelectorAll(".category-item");
+                        const carouselItems = document.querySelectorAll(".carousel-e-item");
+                        const categoryMenu = document.getElementById("categoryMenu");
+                        const carouselContainer = document.getElementById("carouselContainer");
+
+                        let activeCategoryId = "freshwater"; // Biến để lưu trữ danh mục đang hoạt động
+                        let activeItemIndex = 0; // Biến để theo dõi ảnh hiện tại trong danh mục
+
+                        // Hàm để chuyển carousel theo danh mục
+                        function changeCarousel(category) {
+                            carouselItems.forEach(item => item.classList.remove("active"));
+                            const targetItem = document.getElementById(category);
+                            if (targetItem) {
+                                targetItem.classList.add("active");
+                            }
+                        }
+
+                        // Lắng nghe sự kiện click vào danh mục
+                        categories.forEach(category => {
+                            category.addEventListener("click", function () {
+                                const target = this.getAttribute("data-target");
+                                activeCategoryId = target;
+                                activeItemIndex = 0; // Reset lại ảnh khi chuyển danh mục
+                                changeCarousel(target);
+                            });
+                        });
+
+                        // Hàm cuộn carousel
+                        let scrollTimeout;
+                        carouselContainer.addEventListener('wheel', (event) => {
+                            clearTimeout(scrollTimeout);
+                            scrollTimeout = setTimeout(() => {
+                                if (event.deltaY > 0) {
+                                    nextImageInCategory();
+                                } else {
+                                    prevImageInCategory();
+                                }
+                            }, 150);
+                        });
+
+                        // Chuyển sang ảnh tiếp theo trong danh mục
+                        function nextImageInCategory() {
+                            const currentCategoryItems = document.querySelector(`#${activeCategoryId}`).children;
+                            if (activeItemIndex < currentCategoryItems.length - 1) {
+                                // Chuyển sang ảnh tiếp theo trong danh mục
+                                activeItemIndex++;
+                            } else {
+                                // Nếu hết ảnh, chuyển sang danh mục tiếp theo
+                                const nextCategory = getNextCategory();
+                                changeCarousel(nextCategory);
+                                activeCategoryId = nextCategory;
+                                activeItemIndex = 0; // Reset lại chỉ số ảnh khi chuyển danh mục
+                            }
+                            updateActiveImage(currentCategoryItems);
+                        }
+
+                        // Quay lại ảnh trước trong danh mục
+                        function prevImageInCategory() {
+                            const currentCategoryItems = document.querySelector(`#${activeCategoryId}`).children;
+                            if (activeItemIndex > 0) {
+                                // Quay lại ảnh trước trong danh mục
+                                activeItemIndex--;
+                            } else {
+                                // Nếu là ảnh đầu tiên, quay lại danh mục trước
+                                const prevCategory = getPreviousCategory();
+                                changeCarousel(prevCategory);
+                                activeCategoryId = prevCategory;
+                                activeItemIndex = document.querySelector(`#${prevCategory}`).children.length - 1; // Chuyển tới ảnh cuối của danh mục trước
+                            }
+                            updateActiveImage(currentCategoryItems);
+                        }
+
+                        // Cập nhật ảnh đang hiển thị trong danh mục
+                        function updateActiveImage(categoryItems) {
+                            Array.from(categoryItems).forEach((item, index) => {
+                                item.style.display = (index === activeItemIndex) ? "block" : "none";
+                            });
+                        }
+
+                        // Lấy danh mục tiếp theo
+                        function getNextCategory() {
+                            const categoriesArray = Array.from(categories);
+                            const currentCategoryIndex = categoriesArray.findIndex(category => category.getAttribute("data-target") === activeCategoryId);
+                            const nextCategoryIndex = (currentCategoryIndex + 1) % categoriesArray.length;
+                            return categoriesArray[nextCategoryIndex].getAttribute("data-target");
+                        }
+
+                        // Lấy danh mục trước
+                        function getPreviousCategory() {
+                            const categoriesArray = Array.from(categories);
+                            const currentCategoryIndex = categoriesArray.findIndex(category => category.getAttribute("data-target") === activeCategoryId);
+                            const prevCategoryIndex = (currentCategoryIndex - 1 + categoriesArray.length) % categoriesArray.length;
+                            return categoriesArray[prevCategoryIndex].getAttribute("data-target");
+                        }
+
+                        // Mặc định hiển thị "Khu vực cá nước ngọt"
+                        changeCarousel("freshwater");
+                        updateActiveImage(document.querySelector("#freshwater").children); // Hiển thị ảnh đầu tiên trong danh mục "freshwater"
+                    }
+
+
                     break;
 
                 case "news":
@@ -502,72 +605,6 @@
 
             document.getElementById('bookingForm').reset();
         }
-        document.addEventListener("DOMContentLoaded", function () {
-            const categories = document.querySelectorAll(".category-e-item");
-            const carouselItems = document.querySelectorAll(".carousel-e-item");
-            const categoryMenu = document.getElementById("categoryMenu");
-            const carouselContainer = document.getElementById("carouselContainer");
-
-            // Hàm để chuyển carousel theo danh mục
-            function changeCarousel(category) {
-                // Ẩn tất cả các item carousel
-                carouselItems.forEach(item => item.classList.remove("active"));
-
-                // Hiển thị item tương ứng với category
-                const targetItem = document.getElementById(category);
-                if (targetItem) {
-                    targetItem.classList.add("active");
-                }
-            }
-
-            // Lắng nghe sự kiện click vào danh mục
-            categories.forEach(category => {
-                category.addEventListener("click", function () {
-                    const target = this.getAttribute("data-target");
-                    changeCarousel(target);
-                });
-            });
-
-            // Hàm cuộn carousel
-            let scrollTimeout;
-            carouselContainer.addEventListener('wheel', (event) => {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    if (event.deltaY > 0) {
-                        nextCarousel();
-                    } else {
-                        prevCarousel();
-                    }
-                }, 150);
-            });
-
-            // Chuyển sang ảnh tiếp theo
-            function nextCarousel() {
-                let currentActive = document.querySelector(".carousel-e-item.active");
-                let next = currentActive.nextElementSibling;
-
-                if (!next) {
-                    next = carouselItems[0];
-                }
-
-                changeCarousel(next.id);
-            }
-
-            // Quay lại ảnh trước
-            function prevCarousel() {
-                let currentActive = document.querySelector(".carousel-e-item.active");
-                let prev = currentActive.previousElementSibling;
-
-                if (!prev) {
-                    prev = carouselItems[carouselItems.length - 1];
-                }
-
-                changeCarousel(prev.id);
-            }
-
-            // Mặc định hiển thị "Khu vực cá nước ngọt"
-            changeCarousel("freshwater");
-        });
     </script>
 </body>
 
